@@ -79,7 +79,7 @@ function setStatus(message, isError = false) {
 
 function estimateVoiceRssRequestSize(text) {
   const params = new URLSearchParams({
-    key: "11ce9497f63d4299b54d659798d4755f",
+    key: "759c79c9515242148848e58daaf0d74c",
     hl: "en-us",
     src: text,
     c: "MP3",
