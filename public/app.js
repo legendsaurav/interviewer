@@ -10,6 +10,7 @@ const resultVideo = document.getElementById("resultVideo");
 const generateBtn = document.getElementById("generateBtn");
 
 const VOICERSS_MAX_REQUEST_BYTES = 100 * 1024;
+const VOICERSS_API_KEY_LENGTH = 32;
 
 guestLoginBtn.addEventListener("click", () => {
   authCard.classList.add("hidden");
@@ -79,7 +80,7 @@ function setStatus(message, isError = false) {
 
 function estimateVoiceRssRequestSize(text) {
   const params = new URLSearchParams({
-    key: "759c79c9515242148848e58daaf0d74c",
+    key: "x".repeat(VOICERSS_API_KEY_LENGTH),
     hl: "en-us",
     src: text,
     c: "MP3",

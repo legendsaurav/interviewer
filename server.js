@@ -10,9 +10,11 @@ dotenv.config();
 
 const app = express();
 const rootDir = __dirname;
-const tmpDir = path.join(rootDir, "tmp");
+const isVercelRuntime = Boolean(process.env.VERCEL);
+const runtimeBaseDir = isVercelRuntime ? path.join("/tmp", "interviewer") : rootDir;
+const tmpDir = path.join(runtimeBaseDir, "tmp");
 const publicDir = path.join(rootDir, "public");
-const generatedDir = path.join(publicDir, "generated");
+const generatedDir = path.join(runtimeBaseDir, "generated");
 const VOICERSS_MAX_REQUEST_BYTES = 100 * 1024;
 
 const PORT = Number(process.env.PORT || 3000);
@@ -28,6 +30,18 @@ const INTERVIEWER_IMAGE = path.resolve(rootDir, process.env.INTERVIEWER_IMAGE ||
 
 app.use(express.json({ limit: "1mb" }));
 app.use(express.static(publicDir));
+
+app.get("/generated/:fileName", async (req, res) => {
+  const fileName = path.basename(req.params.fileName || "");
+  const fullPath = path.join(generatedDir, fileName);
+
+  try {
+    await fs.access(fullPath);
+    res.sendFile(fullPath);
+  } catch {
+    res.status(404).json({ error: "Generated video not found." });
+  }
+});
 
 async function ensureDirs() {
   await fs.mkdir(tmpDir, { recursive: true });
@@ -165,6 +179,14 @@ function runSadTalker({ sourceImage, drivenAudio, requestOutputDir }) {
 }
 
 app.post("/api/interview/generate", async (req, res) => {
+  if (isVercelRuntime) {
+    res.status(501).json({
+      error:
+        "SadTalker video generation is not supported on Vercel serverless. Deploy the backend on a VM/GPU server and connect this frontend to that API.",
+    });
+    return;
+  }
+
   const text = safeText(req.body?.text);
 
   if (!text) {
@@ -191,6 +213,7 @@ app.post("/api/interview/generate", async (req, res) => {
   const audioPath = path.join(requestDir, "speech.mp3");
 
   try {
+    await ensureDirs();
     await fs.mkdir(requestDir, { recursive: true });
     await fs.mkdir(requestOutputDir, { recursive: true });
 
@@ -225,13 +248,17 @@ app.get("/api/health", (_req, res) => {
   res.json({ ok: true });
 });
 
-ensureDirs()
-  .then(() => {
-    app.listen(PORT, () => {
-      console.log(`Interview app running at http://localhost:${PORT}`);
+if (require.main === module) {
+  ensureDirs()
+    .then(() => {
+      app.listen(PORT, () => {
+        console.log(`Interview app running at http://localhost:${PORT}`);
+      });
+    })
+    .catch((err) => {
+      console.error("Failed to initialize app directories:", err);
+      process.exit(1);
     });
-  })
-  .catch((err) => {
-    console.error("Failed to initialize app directories:", err);
-    process.exit(1);
-  });
+}
+
+module.exports = app;
