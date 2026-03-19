@@ -18,8 +18,8 @@
         <p class="eyebrow">Career Booster Portal</p>
         <h1>Practice with a talking AI interviewer.</h1>
         <p class="subcopy">
-          Enter as guest to open your interview room. Your message will be converted to speech and rendered
-          as a lip-synced interviewer video.
+          Enter as guest to open your interview room. Your message will be converted to speech and played
+          as interview audio.
         </p>
         <button id="guestLoginBtn" class="btn-primary" type="button">Guest Login</button>
       </section>
@@ -39,17 +39,16 @@
                 id="interviewText"
                 name="interviewText"
                 placeholder="Type your interview prompt here..."
-                maxlength="600"
                 required
               ></textarea>
               <p id="requestSizeInfo" class="request-size" aria-live="polite"></p>
-              <button id="generateBtn" class="btn-primary" type="submit">Generate Talking Video</button>
+              <button id="generateBtn" class="btn-primary" type="submit">Generate Interview Audio</button>
             </form>
 
             <p id="statusText" class="status" aria-live="polite"></p>
 
-            <div class="video-wrap hidden" id="videoWrap">
-              <video id="resultVideo" controls playsinline></video>
+            <div class="video-wrap hidden" id="audioWrap">
+              <audio id="resultAudio" controls></audio>
             </div>
           </div>
         </div>

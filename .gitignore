@@ -3,3 +3,7 @@ node_modules/
 tmp/**
 public/generated/**
 !public/generated/.gitkeep
+
+.venv/
+.venv310/
+

@@ -1,9 +1,7 @@
 const express = require("express");
 const path = require("path");
 const fs = require("fs/promises");
-const fsSync = require("fs");
 const crypto = require("crypto");
-const { spawn } = require("child_process");
 const dotenv = require("dotenv");
 
 dotenv.config();
@@ -21,12 +19,6 @@ const PORT = Number(process.env.PORT || 3000);
 const VOICERSS_API_KEY = process.env.VOICERSS_API_KEY || "759c79c9515242148848e58daaf0d74c";
 const VOICERSS_LANG = process.env.VOICERSS_LANG || "en-us";
 const VOICERSS_CODEC = process.env.VOICERSS_CODEC || "MP3";
-const SADTALKER_DIR = path.resolve(rootDir, process.env.SADTALKER_DIR || "./SadTalker");
-const PYTHON_EXECUTABLE = process.env.PYTHON_EXECUTABLE || "python";
-const SADTALKER_EXTRA_ARGS = process.env.SADTALKER_EXTRA_ARGS
-  ? process.env.SADTALKER_EXTRA_ARGS.split(" ").filter(Boolean)
-  : ["--still", "--preprocess", "full"];
-const INTERVIEWER_IMAGE = path.resolve(rootDir, process.env.INTERVIEWER_IMAGE || "./public/interviewer.svg");
 
 app.use(express.json({ limit: "1mb" }));
 app.use(express.static(publicDir));
@@ -39,7 +31,7 @@ app.get("/generated/:fileName", async (req, res) => {
     await fs.access(fullPath);
     res.sendFile(fullPath);
   } catch {
-    res.status(404).json({ error: "Generated video not found." });
+    res.status(404).json({ error: "Generated file not found." });
   }
 });
 
@@ -76,8 +68,13 @@ async function synthesizeWithVoiceRSS(text, outAudioPath) {
     f: "44khz_16bit_stereo",
   });
 
-  const url = `https://api.voicerss.org/?${params.toString()}`;
-  const response = await fetch(url);
+  const response = await fetch("https://api.voicerss.org/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: params.toString(),
+  });
 
   if (!response.ok) {
     throw new Error(`VoiceRSS request failed with ${response.status}`);
@@ -97,105 +94,11 @@ async function synthesizeWithVoiceRSS(text, outAudioPath) {
   await fs.writeFile(outAudioPath, buffer);
 }
 
-function runSadTalker({ sourceImage, drivenAudio, requestOutputDir }) {
-  return new Promise((resolve, reject) => {
-    const scriptPath = path.join(SADTALKER_DIR, "inference.py");
-
-    if (!fsSync.existsSync(scriptPath)) {
-      reject(
-        new Error(
-          `SadTalker not found at ${scriptPath}. Set SADTALKER_DIR in .env to your SadTalker clone path.`
-        )
-      );
-      return;
-    }
-
-    const args = [
-      scriptPath,
-      "--driven_audio",
-      drivenAudio,
-      "--source_image",
-      sourceImage,
-      "--result_dir",
-      requestOutputDir,
-      ...SADTALKER_EXTRA_ARGS,
-    ];
-
-    const child = spawn(PYTHON_EXECUTABLE, args, {
-      cwd: SADTALKER_DIR,
-      shell: false,
-      windowsHide: true,
-    });
-
-    let stdout = "";
-    let stderr = "";
-
-    child.stdout.on("data", (chunk) => {
-      stdout += chunk.toString();
-    });
-
-    child.stderr.on("data", (chunk) => {
-      stderr += chunk.toString();
-    });
-
-    child.on("error", (err) => {
-      reject(new Error(`Failed to launch SadTalker: ${err.message}`));
-    });
-
-    child.on("close", async (code) => {
-      if (code !== 0) {
-        reject(
-          new Error(
-            `SadTalker failed (exit code ${code}).\n${stderr || stdout || "No logs captured."}`
-          )
-        );
-        return;
-      }
-
-      try {
-        const files = await fs.readdir(requestOutputDir, { withFileTypes: true });
-        const mp4Files = [];
-
-        for (const file of files) {
-          if (file.isFile() && file.name.toLowerCase().endsWith(".mp4")) {
-            const fullPath = path.join(requestOutputDir, file.name);
-            const stat = await fs.stat(fullPath);
-            mp4Files.push({ fullPath, mtimeMs: stat.mtimeMs });
-          }
-        }
-
-        if (!mp4Files.length) {
-          reject(new Error("SadTalker finished but no MP4 file was generated."));
-          return;
-        }
-
-        mp4Files.sort((a, b) => b.mtimeMs - a.mtimeMs);
-        resolve(mp4Files[0].fullPath);
-      } catch (readErr) {
-        reject(new Error(`Unable to collect SadTalker output: ${readErr.message}`));
-      }
-    });
-  });
-}
-
 app.post("/api/interview/generate", async (req, res) => {
-  if (isVercelRuntime) {
-    res.status(501).json({
-      error:
-        "SadTalker video generation is not supported on Vercel serverless. Deploy the backend on a VM/GPU server and connect this frontend to that API.",
-    });
-    return;
-  }
-
   const text = safeText(req.body?.text);
 
   if (!text) {
     res.status(400).json({ error: "Please enter interview text." });
-    return;
-  }
-
-  if (text.length > 600) {
-    res.status(400).json({ error: "Text is too long. Keep it under 600 characters." });
     return;
   }
 
@@ -209,34 +112,27 @@ app.post("/api/interview/generate", async (req, res) => {
 
   const requestId = crypto.randomUUID();
   const requestDir = path.join(tmpDir, requestId);
-  const requestOutputDir = path.join(requestDir, "sadtalker_output");
   const audioPath = path.join(requestDir, "speech.mp3");
 
   try {
     await ensureDirs();
     await fs.mkdir(requestDir, { recursive: true });
-    await fs.mkdir(requestOutputDir, { recursive: true });
 
     await synthesizeWithVoiceRSS(text, audioPath);
 
-    const rawVideoPath = await runSadTalker({
-      sourceImage: INTERVIEWER_IMAGE,
-      drivenAudio: audioPath,
-      requestOutputDir,
-    });
+    const audioExtension = VOICERSS_CODEC.toLowerCase() === "wav" ? "wav" : "mp3";
+    const finalAudioName = `${requestId}.${audioExtension}`;
+    const finalAudioPath = path.join(generatedDir, finalAudioName);
 
-    const finalVideoName = `${requestId}.mp4`;
-    const finalVideoPath = path.join(generatedDir, finalVideoName);
-
-    await fs.copyFile(rawVideoPath, finalVideoPath);
+    await fs.copyFile(audioPath, finalAudioPath);
 
     res.json({
       ok: true,
-      videoUrl: `/generated/${finalVideoName}`,
+      audioUrl: `/generated/${finalAudioName}`,
     });
   } catch (error) {
     res.status(500).json({
-      error: error.message || "Failed to generate interview video.",
+      error: error.message || "Failed to generate interview audio.",
     });
   } finally {
     // Best effort cleanup for transient artifacts.

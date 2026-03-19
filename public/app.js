@@ -5,8 +5,8 @@ const interviewForm = document.getElementById("interviewForm");
 const interviewText = document.getElementById("interviewText");
 const requestSizeInfo = document.getElementById("requestSizeInfo");
 const statusText = document.getElementById("statusText");
-const videoWrap = document.getElementById("videoWrap");
-const resultVideo = document.getElementById("resultVideo");
+const audioWrap = document.getElementById("audioWrap");
+const resultAudio = document.getElementById("resultAudio");
 const generateBtn = document.getElementById("generateBtn");
 
 const VOICERSS_MAX_REQUEST_BYTES = 100 * 1024;
@@ -43,9 +43,9 @@ interviewForm.addEventListener("submit", async (event) => {
   }
 
   generateBtn.disabled = true;
-  setStatus("Generating audio and talking video... this can take a while.");
-  videoWrap.classList.add("hidden");
-  resultVideo.removeAttribute("src");
+  setStatus("Generating interview audio...");
+  audioWrap.classList.add("hidden");
+  resultAudio.removeAttribute("src");
 
   try {
     const response = await fetch("/api/interview/generate", {
@@ -57,15 +57,15 @@ interviewForm.addEventListener("submit", async (event) => {
     const payload = await response.json();
 
     if (!response.ok) {
-      throw new Error(payload.error || "Failed to generate video.");
+      throw new Error(payload.error || "Failed to generate audio.");
     }
 
-    const cacheBusted = `${payload.videoUrl}?t=${Date.now()}`;
-    resultVideo.src = cacheBusted;
-    resultVideo.load();
+    const cacheBusted = `${payload.audioUrl}?t=${Date.now()}`;
+    resultAudio.src = cacheBusted;
+    resultAudio.load();
 
-    videoWrap.classList.remove("hidden");
-    setStatus("Talking interview video generated successfully.");
+    audioWrap.classList.remove("hidden");
+    setStatus("Interview audio generated successfully.");
   } catch (error) {
     setStatus(error.message || "Something went wrong.", true);
   } finally {
