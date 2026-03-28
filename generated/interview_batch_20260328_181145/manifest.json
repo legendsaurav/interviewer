@@ -1,0 +1,359 @@
+{
+  "created_at": "2026-03-28T18:12:49",
+  "qa_file": "C:\\Users\\proka\\OneDrive\\Desktop\\career_booster\\interviwer\\vlsi_interview_qa.txt",
+  "source_image": "C:\\Users\\proka\\OneDrive\\Desktop\\career_booster\\interviwer\\SadTalker\\pic\\mohi_didi.png",
+  "question_count": 50,
+  "items": [
+    {
+      "index": 1,
+      "question": "What is VLSI and why is it important?",
+      "audio_file": "audio/q001.mp3",
+      "video_file": null,
+      "raw_sadtalker_video": null
+    },
+    {
+      "index": 2,
+      "question": "Differentiate between front-end and back-end VLSI design.",
+      "audio_file": "audio/q002.mp3",
+      "video_file": null,
+      "raw_sadtalker_video": null
+    },
+    {
+      "index": 3,
+      "question": "What is Moore's Law and is it still valid?",
+      "audio_file": "audio/q003.mp3",
+      "video_file": null,
+      "raw_sadtalker_video": null
+    },
+    {
+      "index": 4,
+      "question": "What is a standard cell in ASIC design?",
+      "audio_file": "audio/q004.mp3",
+      "video_file": null,
+      "raw_sadtalker_video": null
+    },
+    {
+      "index": 5,
+      "question": "What is RTL?",
+      "audio_file": "audio/q005.mp3",
+      "video_file": null,
+      "raw_sadtalker_video": null
+    },
+    {
+      "index": 6,
+      "question": "What is logic synthesis?",
+      "audio_file": "audio/q006.mp3",
+      "video_file": null,
+      "raw_sadtalker_video": null
+    },
+    {
+      "index": 7,
+      "question": "What is a netlist?",
+      "audio_file": "audio/q007.mp3",
+      "video_file": null,
+      "raw_sadtalker_video": null
+    },
+    {
+      "index": 8,
+      "question": "What is timing closure?",
+      "audio_file": "audio/q008.mp3",
+      "video_file": null,
+      "raw_sadtalker_video": null
+    },
+    {
+      "index": 9,
+      "question": "Explain setup time.",
+      "audio_file": "audio/q009.mp3",
+      "video_file": null,
+      "raw_sadtalker_video": null
+    },
+    {
+      "index": 10,
+      "question": "Explain hold time.",
+      "audio_file": "audio/q010.mp3",
+      "video_file": null,
+      "raw_sadtalker_video": null
+    },
+    {
+      "index": 11,
+      "question": "What causes setup violations?",
+      "audio_file": "audio/q011.mp3",
+      "video_file": null,
+      "raw_sadtalker_video": null
+    },
+    {
+      "index": 12,
+      "question": "What causes hold violations?",
+      "audio_file": "audio/q012.mp3",
+      "video_file": null,
+      "raw_sadtalker_video": null
+    },
+    {
+      "index": 13,
+      "question": "What is clock skew?",
+      "audio_file": "audio/q013.mp3",
+      "video_file": null,
+      "raw_sadtalker_video": null
+    },
+    {
+      "index": 14,
+      "question": "What is clock jitter?",
+      "audio_file": "audio/q014.mp3",
+      "video_file": null,
+      "raw_sadtalker_video": null
+    },
+    {
+      "index": 15,
+      "question": "What is CTS?",
+      "audio_file": "audio/q015.mp3",
+      "video_file": null,
+      "raw_sadtalker_video": null
+    },
+    {
+      "index": 16,
+      "question": "What is STA?",
+      "audio_file": "audio/q016.mp3",
+      "video_file": null,
+      "raw_sadtalker_video": null
+    },
+    {
+      "index": 17,
+      "question": "What is MCMM analysis?",
+      "audio_file": "audio/q017.mp3",
+      "video_file": null,
+      "raw_sadtalker_video": null
+    },
+    {
+      "index": 18,
+      "question": "What is OCV?",
+      "audio_file": "audio/q018.mp3",
+      "video_file": null,
+      "raw_sadtalker_video": null
+    },
+    {
+      "index": 19,
+      "question": "What is AOCV/POCV?",
+      "audio_file": "audio/q019.mp3",
+      "video_file": null,
+      "raw_sadtalker_video": null
+    },
+    {
+      "index": 20,
+      "question": "What is a false path?",
+      "audio_file": "audio/q020.mp3",
+      "video_file": null,
+      "raw_sadtalker_video": null
+    },
+    {
+      "index": 21,
+      "question": "What is a multicycle path?",
+      "audio_file": "audio/q021.mp3",
+      "video_file": null,
+      "raw_sadtalker_video": null
+    },
+    {
+      "index": 22,
+      "question": "What is crosstalk in VLSI?",
+      "audio_file": "audio/q022.mp3",
+      "video_file": null,
+      "raw_sadtalker_video": null
+    },
+    {
+      "index": 23,
+      "question": "What is IR drop?",
+      "audio_file": "audio/q023.mp3",
+      "video_file": null,
+      "raw_sadtalker_video": null
+    },
+    {
+      "index": 24,
+      "question": "What is electromigration?",
+      "audio_file": "audio/q024.mp3",
+      "video_file": null,
+      "raw_sadtalker_video": null
+    },
+    {
+      "index": 25,
+      "question": "What is dynamic power in CMOS?",
+      "audio_file": "audio/q025.mp3",
+      "video_file": null,
+      "raw_sadtalker_video": null
+    },
+    {
+      "index": 26,
+      "question": "What is leakage power?",
+      "audio_file": "audio/q026.mp3",
+      "video_file": null,
+      "raw_sadtalker_video": null
+    },
+    {
+      "index": 27,
+      "question": "How do you reduce dynamic power?",
+      "audio_file": "audio/q027.mp3",
+      "video_file": null,
+      "raw_sadtalker_video": null
+    },
+    {
+      "index": 28,
+      "question": "How do you reduce leakage power?",
+      "audio_file": "audio/q028.mp3",
+      "video_file": null,
+      "raw_sadtalker_video": null
+    },
+    {
+      "index": 29,
+      "question": "What is floorplanning?",
+      "audio_file": "audio/q029.mp3",
+      "video_file": null,
+      "raw_sadtalker_video": null
+    },
+    {
+      "index": 30,
+      "question": "What is placement?",
+      "audio_file": "audio/q030.mp3",
+      "video_file": null,
+      "raw_sadtalker_video": null
+    },
+    {
+      "index": 31,
+      "question": "What is routing?",
+      "audio_file": "audio/q031.mp3",
+      "video_file": null,
+      "raw_sadtalker_video": null
+    },
+    {
+      "index": 32,
+      "question": "What are DRC and LVS?",
+      "audio_file": "audio/q032.mp3",
+      "video_file": null,
+      "raw_sadtalker_video": null
+    },
+    {
+      "index": 33,
+      "question": "What is parasitic extraction?",
+      "audio_file": "audio/q033.mp3",
+      "video_file": null,
+      "raw_sadtalker_video": null
+    },
+    {
+      "index": 34,
+      "question": "What is a PVT corner?",
+      "audio_file": "audio/q034.mp3",
+      "video_file": null,
+      "raw_sadtalker_video": null
+    },
+    {
+      "index": 35,
+      "question": "What is useful skew?",
+      "audio_file": "audio/q035.mp3",
+      "video_file": null,
+      "raw_sadtalker_video": null
+    },
+    {
+      "index": 36,
+      "question": "What is scan chain and why is it used?",
+      "audio_file": "audio/q036.mp3",
+      "video_file": null,
+      "raw_sadtalker_video": null
+    },
+    {
+      "index": 37,
+      "question": "What is ATPG?",
+      "audio_file": "audio/q037.mp3",
+      "video_file": null,
+      "raw_sadtalker_video": null
+    },
+    {
+      "index": 38,
+      "question": "What is equivalence checking?",
+      "audio_file": "audio/q038.mp3",
+      "video_file": null,
+      "raw_sadtalker_video": null
+    },
+    {
+      "index": 39,
+      "question": "What is CDC and why important?",
+      "audio_file": "audio/q039.mp3",
+      "video_file": null,
+      "raw_sadtalker_video": null
+    },
+    {
+      "index": 40,
+      "question": "How do you handle metastability?",
+      "audio_file": "audio/q040.mp3",
+      "video_file": null,
+      "raw_sadtalker_video": null
+    },
+    {
+      "index": 41,
+      "question": "What is reset synchronizer?",
+      "audio_file": "audio/q041.mp3",
+      "video_file": null,
+      "raw_sadtalker_video": null
+    },
+    {
+      "index": 42,
+      "question": "What is UPF in low-power design?",
+      "audio_file": "audio/q042.mp3",
+      "video_file": null,
+      "raw_sadtalker_video": null
+    },
+    {
+      "index": 43,
+      "question": "What is isolation cell?",
+      "audio_file": "audio/q043.mp3",
+      "video_file": null,
+      "raw_sadtalker_video": null
+    },
+    {
+      "index": 44,
+      "question": "What is retention flop?",
+      "audio_file": "audio/q044.mp3",
+      "video_file": null,
+      "raw_sadtalker_video": null
+    },
+    {
+      "index": 45,
+      "question": "What is ECO in VLSI?",
+      "audio_file": "audio/q045.mp3",
+      "video_file": null,
+      "raw_sadtalker_video": null
+    },
+    {
+      "index": 46,
+      "question": "What is congestion and how do you fix it?",
+      "audio_file": "audio/q046.mp3",
+      "video_file": null,
+      "raw_sadtalker_video": null
+    },
+    {
+      "index": 47,
+      "question": "What is the difference between FPGA and ASIC?",
+      "audio_file": "audio/q047.mp3",
+      "video_file": null,
+      "raw_sadtalker_video": null
+    },
+    {
+      "index": 48,
+      "question": "What is signoff in physical design?",
+      "audio_file": "audio/q048.mp3",
+      "video_file": null,
+      "raw_sadtalker_video": null
+    },
+    {
+      "index": 49,
+      "question": "What is tape-out?",
+      "audio_file": "audio/q049.mp3",
+      "video_file": null,
+      "raw_sadtalker_video": null
+    },
+    {
+      "index": 50,
+      "question": "What metrics are used to evaluate VLSI implementation quality?",
+      "audio_file": "audio/q050.mp3",
+      "video_file": null,
+      "raw_sadtalker_video": null
+    }
+  ],
+  "sequence": []
+}

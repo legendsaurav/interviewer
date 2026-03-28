@@ -14,14 +14,84 @@ const tmpDir = path.join(runtimeBaseDir, "tmp");
 const publicDir = path.join(rootDir, "public");
 const generatedDir = path.join(runtimeBaseDir, "generated");
 const VOICERSS_MAX_REQUEST_BYTES = 100 * 1024;
+const JOB_PENDING_MS = Number(process.env.JOB_PENDING_MS || 15000);
+const JOB_DONE_MS = Number(process.env.JOB_DONE_MS || 180000);
 
 const PORT = Number(process.env.PORT || 3000);
 const VOICERSS_API_KEY = process.env.VOICERSS_API_KEY || "759c79c9515242148848e58daaf0d74c";
 const VOICERSS_LANG = process.env.VOICERSS_LANG || "en-us";
 const VOICERSS_CODEC = process.env.VOICERSS_CODEC || "MP3";
+const PUBLIC_BASE_URL = process.env.PUBLIC_BASE_URL || `http://localhost:${PORT}`;
+
+const jobs = new Map();
 
 app.use(express.json({ limit: "1mb" }));
 app.use(express.static(publicDir));
+
+function resolveJobStatus(job) {
+  const elapsedMs = Date.now() - job.createdAt;
+
+  if (elapsedMs < JOB_PENDING_MS) {
+    return "pending";
+  }
+
+  if (elapsedMs < JOB_DONE_MS) {
+    return "processing";
+  }
+
+  return "done";
+}
+
+app.post("/start-job", async (req, res) => {
+  const userId = safeText(req.body?.userId);
+  const jobType = safeText(req.body?.jobType);
+
+  if (!userId) {
+    res.status(400).json({ error: "userId is required" });
+    return;
+  }
+
+  if (jobType !== "interview_generation") {
+    res.status(400).json({ error: "Unsupported jobType" });
+    return;
+  }
+
+  const jobId = crypto.randomUUID();
+
+  jobs.set(jobId, {
+    jobId,
+    userId,
+    jobType,
+    createdAt: Date.now(),
+    resultUrl: `${PUBLIC_BASE_URL}/generated/demo-interview.mp4`,
+  });
+
+  res.json({
+    ok: true,
+    jobId,
+    status: "pending",
+  });
+});
+
+app.get("/job-status/:jobId", async (req, res) => {
+  const jobId = safeText(req.params?.jobId);
+  const job = jobs.get(jobId);
+
+  if (!job) {
+    res.status(404).json({ error: "jobId not found" });
+    return;
+  }
+
+  const status = resolveJobStatus(job);
+  const resultUrl = status === "done" ? job.resultUrl : null;
+
+  res.json({
+    ok: true,
+    jobId,
+    status,
+    resultUrl,
+  });
+});
 
 app.get("/generated/:fileName", async (req, res) => {
   const fileName = path.basename(req.params.fileName || "");

@@ -1,0 +1,24 @@
+{
+  "created_at": "2026-03-28T18:53:54",
+  "qa_file": "C:\\Users\\proka\\OneDrive\\Desktop\\career_booster\\interviwer\\vlsi_interview_qa.txt",
+  "source_image": "C:\\Users\\proka\\OneDrive\\Desktop\\career_booster\\interviwer\\SadTalker\\pic\\mohi_didi.png",
+  "question_count": 1,
+  "items": [
+    {
+      "index": 1,
+      "question": "Question 1",
+      "audio_file": "C:\\Users\\proka\\OneDrive\\Desktop\\career_booster\\interviwer\\generated\\interview_batch_20260328_181145\\audio\\q001.mp3",
+      "video_file": "videos/video_001.mp4",
+      "raw_sadtalker_video": "C:\\Users\\proka\\OneDrive\\Desktop\\career_booster\\interviwer\\generated\\interview_batch_20260328_183927\\sadtalker_raw\\q001\\2026_03_28_18.40.16.mp4"
+    }
+  ],
+  "sequence": [
+    {
+      "type": "video",
+      "index": 1,
+      "question": "Question 1",
+      "video": "videos/video_001.mp4",
+      "audio": "C:\\Users\\proka\\OneDrive\\Desktop\\career_booster\\interviwer\\generated\\interview_batch_20260328_181145\\audio\\q001.mp3"
+    }
+  ]
+}

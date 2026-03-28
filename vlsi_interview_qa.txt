@@ -1,0 +1,154 @@
+VLSI Interview Q&A Set
+Generated on: 2026-03-28
+Gemini API check result: NOT WORKING (configured=false on /ai/gemini/status)
+Prompt intent: Generate 50 random interview questions on VLSI technology with answers.
+
+1. Q: What is VLSI and why is it important?
+   A: VLSI (Very Large Scale Integration) is the process of integrating millions or billions of transistors on a single chip. It enables modern processors, memory, and SoCs with high performance and low power.
+
+2. Q: Differentiate between front-end and back-end VLSI design.
+   A: Front-end includes specification, RTL coding, and functional verification. Back-end includes synthesis, floorplanning, placement, CTS, routing, signoff, and physical verification.
+
+3. Q: What is Moore's Law and is it still valid?
+   A: Moore's Law predicts transistor density roughly doubling every 18-24 months. It is slowing in pure scaling terms, but innovation continues through new architectures, packaging, and process technologies.
+
+4. Q: What is a standard cell in ASIC design?
+   A: A standard cell is a pre-characterized logic cell (e.g., NAND, INV, DFF) from a library with known timing, area, and power used for synthesis and P&R.
+
+5. Q: What is RTL?
+   A: RTL (Register Transfer Level) describes digital hardware behavior in terms of registers and combinational logic, typically written in Verilog or VHDL.
+
+6. Q: What is logic synthesis?
+   A: Logic synthesis converts RTL into a gate-level netlist using technology libraries while optimizing timing, area, and power constraints.
+
+7. Q: What is a netlist?
+   A: A netlist is a connectivity description of logic cells and wires representing the circuit after synthesis or extraction.
+
+8. Q: What is timing closure?
+   A: Timing closure is the iterative process of meeting setup/hold requirements across all paths and corners by optimizing logic, placement, routing, and constraints.
+
+9. Q: Explain setup time.
+   A: Setup time is the minimum interval before the active clock edge during which data must remain stable at a flip-flop input.
+
+10. Q: Explain hold time.
+    A: Hold time is the minimum interval after the active clock edge during which data must remain stable at a flip-flop input.
+
+11. Q: What causes setup violations?
+    A: Slow data path, fast clock path to capture flop, high fanout, poor placement, excessive logic depth, or pessimistic constraints can cause setup violations.
+
+12. Q: What causes hold violations?
+    A: Very fast data paths, clock skew, low delay between flops, and process variations can cause hold violations.
+
+13. Q: What is clock skew?
+    A: Clock skew is the arrival-time difference of the same clock edge at different sequential elements.
+
+14. Q: What is clock jitter?
+    A: Jitter is short-term variation in clock edge timing from its ideal periodic position.
+
+15. Q: What is CTS?
+    A: Clock Tree Synthesis builds the clock distribution network to balance skew, control latency, and meet timing and power goals.
+
+16. Q: What is STA?
+    A: Static Timing Analysis checks timing without simulation by analyzing path delays under constraints across process-voltage-temperature corners.
+
+17. Q: What is MCMM analysis?
+    A: MCMM (Multi-Corner Multi-Mode) analyzes timing and constraints over multiple operating modes and PVT corners to ensure robust silicon behavior.
+
+18. Q: What is OCV?
+    A: On-Chip Variation models local/global delay variation due to manufacturing and environmental differences across a die.
+
+19. Q: What is AOCV/POCV?
+    A: AOCV and POCV are advanced derating methods to model path-depth-dependent and statistical timing variation more accurately than fixed derates.
+
+20. Q: What is a false path?
+    A: A false path is a logically impossible path for data capture in normal operation and should be excluded from timing checks.
+
+21. Q: What is a multicycle path?
+    A: A multicycle path is allowed more than one clock cycle for data propagation, defined using proper setup and hold multicycle constraints.
+
+22. Q: What is crosstalk in VLSI?
+    A: Crosstalk is noise coupling between adjacent interconnects, causing delay shifts or glitches that can impact timing and signal integrity.
+
+23. Q: What is IR drop?
+    A: IR drop is voltage loss in the power grid due to resistance and current flow, reducing cell drive strength and potentially causing timing failures.
+
+24. Q: What is electromigration?
+    A: Electromigration is metal degradation due to high current density, causing voids/hillocks and long-term reliability failures.
+
+25. Q: What is dynamic power in CMOS?
+    A: Dynamic power mainly comes from charging/discharging capacitances and is approximately P = alpha * C * V^2 * f.
+
+26. Q: What is leakage power?
+    A: Leakage power is static power consumed even when transistors are not switching, dominated by subthreshold and gate leakage currents.
+
+27. Q: How do you reduce dynamic power?
+    A: Use clock gating, lower voltage/frequency, reduce switching activity, optimize capacitance, and use multi-bit flops where appropriate.
+
+28. Q: How do you reduce leakage power?
+    A: Use high-Vt cells on non-critical paths, power gating, body bias techniques, and process-aware cell selection.
+
+29. Q: What is floorplanning?
+    A: Floorplanning decides die/core size, macro locations, power structure, and block arrangement to optimize routability and timing.
+
+30. Q: What is placement?
+    A: Placement positions standard cells in legal rows to optimize timing, wirelength, congestion, and power.
+
+31. Q: What is routing?
+    A: Routing creates physical interconnections between pins using metal layers while honoring design rules and timing constraints.
+
+32. Q: What are DRC and LVS?
+    A: DRC checks layout against manufacturing rules; LVS checks whether the extracted layout netlist matches the schematic/netlist connectivity.
+
+33. Q: What is parasitic extraction?
+    A: Extraction computes RC parasitics from layout interconnects/devices for accurate post-route timing and signal integrity analysis.
+
+34. Q: What is a PVT corner?
+    A: A PVT corner is a combination of process, voltage, and temperature conditions used to model best/worst silicon behavior.
+
+35. Q: What is useful skew?
+    A: Useful skew intentionally adjusts clock arrival times to improve setup slack while still satisfying hold constraints.
+
+36. Q: What is scan chain and why is it used?
+    A: Scan chain links flip-flops into shift registers for controllability/observability during manufacturing test and ATPG pattern application.
+
+37. Q: What is ATPG?
+    A: Automatic Test Pattern Generation creates test vectors to detect modeled defects (e.g., stuck-at, transition faults) in scan-based designs.
+
+38. Q: What is equivalence checking?
+    A: Equivalence checking formally verifies that two design representations (e.g., RTL vs synthesized netlist) are functionally identical.
+
+39. Q: What is CDC and why important?
+    A: Clock Domain Crossing concerns signals crossing asynchronous clocks; poor CDC design can cause metastability and intermittent failures.
+
+40. Q: How do you handle metastability?
+    A: Use synchronizers (e.g., 2-flop sync), proper CDC protocols (handshake/FIFO), and avoid combinational logic between synchronizer stages.
+
+41. Q: What is reset synchronizer?
+    A: It safely deasserts asynchronous reset in each clock domain to prevent metastability and reset-release hazards.
+
+42. Q: What is UPF in low-power design?
+    A: UPF (Unified Power Format) specifies power intent including domains, isolation, retention, and power state behavior.
+
+43. Q: What is isolation cell?
+    A: An isolation cell clamps signals from a powered-down domain to prevent unknown values from corrupting active domains.
+
+44. Q: What is retention flop?
+    A: A retention flop preserves key state through power-down using a retention supply, enabling faster restore on wake-up.
+
+45. Q: What is ECO in VLSI?
+    A: Engineering Change Order is a late-stage design modification for bug fixes or timing closure with minimal layout disruption.
+
+46. Q: What is congestion and how do you fix it?
+    A: Congestion is over-utilized routing regions. Fixes include placement spreading, floorplan changes, buffering strategy updates, and layer assignment optimization.
+
+47. Q: What is the difference between FPGA and ASIC?
+    A: FPGA is programmable and fast to prototype but slower and less power-efficient; ASIC is fixed-function with better PPA at high NRE cost and longer development.
+
+48. Q: What is signoff in physical design?
+    A: Signoff is final verification for timing, power integrity, SI, DRC/LVS, EM/IR, and reliability before tape-out.
+
+49. Q: What is tape-out?
+    A: Tape-out is the final release of verified layout data (e.g., GDSII/OASIS) to the foundry for fabrication.
+
+50. Q: What metrics are used to evaluate VLSI implementation quality?
+    A: Common metrics are PPA (performance, power, area), timing slack/WNS/TNS, DRC/LVS clean status, EM/IR margins, yield, and test coverage.

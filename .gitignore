@@ -6,4 +6,5 @@ public/generated/**
 
 .venv/
 .venv310/
+.venv_sadtalker310/
 

@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "node server.js"
+    "dev": "node server.js",
+    "generate:interview-batch": "python scripts/generate_interview_batch.py"
   },
   "engines": {
     "node": ">=18"
